@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NisaaFiqh - Sistem Pakar Fiqh Wanita</title>
+    <title>NisaaFiqh - Hukum Syafi'iyyah</title>
     
     <!-- Tailwind CSS & DaisyUI -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -19,7 +19,6 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Prevent body scroll, use container scroll instead */
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #f8fafc;
         }
@@ -28,19 +27,20 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
-        }
-
-        .content-wrapper {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
+            overflow: hidden; 
         }
 
         .scrollable-content {
             flex: 1;
-            overflow-y: auto; /* Enable vertical scroll */
+            overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 5rem; /* Space for mobile nav */
+            padding-bottom: 140px !important; 
+        }
+
+        @media (min-width: 768px) {
+            .scrollable-content {
+                padding-bottom: 60px !important;
+            }
         }
 
         .glass-card {
@@ -49,11 +49,16 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-            .scrollable-content {
-                padding-bottom: 2rem;
-            }
+        .result-gradient-haid {
+            background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
+        }
+        
+        .result-gradient-istihadhah {
+            background: linear-gradient(135deg, #fff1f2 0%, #ffffff 100%);
+        }
+
+        .result-gradient-warning {
+            background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
         }
     </style>
 </head>
@@ -64,169 +69,183 @@
         <div class="flex-1">
             <div class="flex items-center gap-3">
                 <div class="p-2 bg-primary rounded-xl text-primary-content shadow-lg shadow-primary/30">
-                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
                 </div>
                 <div class="flex flex-col leading-none">
                     <span class="text-lg font-extrabold tracking-tight text-slate-800">Nisaa<span class="text-primary">Fiqh</span></span>
-                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Sistem Pakar Darah</span>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Sistem Pakar Darah Wanita</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="content-wrapper">
+    <div class="flex-1 flex overflow-hidden">
         <!-- Sidebar Desktop -->
         <aside class="hidden md:flex flex-col w-72 border-r border-base-200 bg-white">
             <div class="p-6 space-y-8 flex-1 overflow-y-auto">
                 <div>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Navigasi</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Navigasi Sistem</p>
                     <ul class="space-y-2">
                         <li>
                             <button onclick="switchTab('kalkulator')" id="btn-kalkulator" class="btn btn-ghost w-full justify-start gap-3 bg-primary/10 text-primary border-none">
-                                <i data-lucide="calculator" class="w-5 h-5"></i> Kalkulator Syarie
+                                <i data-lucide="cpu" class="w-5 h-5"></i> Enjin Hukum
                             </button>
                         </li>
                         <li>
                             <button onclick="switchTab('fatwa')" id="btn-fatwa" class="btn btn-ghost w-full justify-start gap-3 hover:bg-slate-100 text-slate-600 border-none">
-                                <i data-lucide="book-open" class="w-5 h-5"></i> Kitab Darah Wanita
+                                <i data-lucide="library" class="w-5 h-5"></i> Rujukan Enjin
                             </button>
                         </li>
                         <li>
                             <button onclick="switchTab('audit')" id="btn-audit" class="btn btn-ghost w-full justify-start gap-3 hover:bg-slate-100 text-slate-600 border-none">
-                                <i data-lucide="history" class="w-5 h-5"></i> Rekod Analisis
+                                <i data-lucide="history" class="w-5 h-5"></i> Sejarah Keputusan
                             </button>
                         </li>
                     </ul>
                 </div>
-
-                <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3">Pautan Luar</p>
-                    <div class="grid grid-cols-1 gap-2">
-                        <a href="https://muftiwp.gov.my/" target="_blank" class="text-xs font-semibold text-slate-600 hover:text-primary flex items-center gap-2">
-                            <i data-lucide="external-link" class="w-3 h-3"></i> Mufti WP
-                        </a>
-                    </div>
-                </div>
             </div>
         </aside>
 
-        <!-- Main Content (Scrollable Area) -->
-        <main class="scrollable-content bg-slate-50/50 p-4 md:p-8 no-scrollbar">
+        <!-- Main Content Area -->
+        <main class="scrollable-content bg-slate-50/50 p-4 md:p-8">
             
             <!-- VIEW: Kalkulator -->
             <div id="view-kalkulator" class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Column Input -->
                     <div class="lg:col-span-5 space-y-4">
                         <div class="card glass-card shadow-xl border-none rounded-[2rem]">
-                            <div class="card-body p-6 md:p-8">
-                                <h3 class="text-xl font-extrabold text-slate-800 mb-6">Input Data Syarie</h3>
+                            <div class="card-body p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h3 class="text-xl font-extrabold text-slate-800">Input Data</h3>
+                                    <div class="badge badge-primary badge-outline text-[10px] font-bold p-3">FORWARD CHAINING</div>
+                                </div>
                                 <div class="space-y-5">
                                     <div class="form-control">
-                                        <label class="label font-bold text-slate-600">Mazhab Utama</label>
-                                        <select id="mazhab-select" class="select select-bordered w-full h-14 rounded-2xl font-bold bg-white">
-                                            <option value="SYAFII">As-Syafi'i (Muktamad)</option>
-                                            <option value="HANAFI">Al-Hanafi</option>
+                                        <label class="label py-1"><span class="label-text font-bold text-slate-500 text-xs uppercase">Sifat Darah (Tamyiz)</span></label>
+                                        <select id="sifat-darah" class="select select-bordered w-full h-12 rounded-xl font-bold bg-slate-50">
+                                            <option value="kuat">Kuat (Hitam/Pekat/Berbau)</option>
+                                            <option value="lemah" selected>Lemah (Merah/Cair/Tidak Berbau)</option>
                                         </select>
                                     </div>
+                                    
                                     <div class="grid grid-cols-2 gap-4">
                                         <div class="form-control">
-                                            <label class="label font-bold text-slate-600 text-xs">Suci (Hari)</label>
-                                            <input type="number" id="input-suci" class="input input-bordered h-14 rounded-2xl font-bold text-center" value="20" />
+                                            <label class="label py-1"><span class="label-text font-bold text-slate-500 text-xs uppercase">Suci Haid Lepas (Hari)</span></label>
+                                            <input type="number" id="input-suci" class="input input-bordered h-12 rounded-xl font-bold text-center" value="20" />
                                         </div>
                                         <div class="form-control">
-                                            <label class="label font-bold text-slate-600 text-xs">Darah (Jam)</label>
-                                            <input type="number" id="input-darah" class="input input-bordered h-14 rounded-2xl font-bold text-center text-primary" value="168" />
+                                            <label class="label py-1"><span class="label-text font-bold text-slate-500 text-xs uppercase">Darah Semasa (Jam)</span></label>
+                                            <input type="number" id="input-darah" class="input input-bordered h-12 rounded-xl font-bold text-center text-primary" value="168" />
                                         </div>
                                     </div>
-                                    <button onclick="calculateFiqh()" class="btn btn-primary w-full h-16 rounded-[1.5rem] shadow-xl text-lg font-black tracking-wide">
-                                        ANALISIS DARAH
+
+                                    <!-- Mini Converter -->
+                                    <div class="p-4 bg-slate-100/50 border border-slate-200 rounded-2xl">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <i data-lucide="zap" class="w-3 h-3 text-amber-500"></i>
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Penukar Hari ke Jam</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <div class="relative">
+                                                <input type="number" id="calc-hari" placeholder="Hari" class="input input-sm w-full font-bold pr-8" oninput="quickConvert()">
+                                                <span class="absolute right-2 top-2 text-[8px] font-bold opacity-30">HARI</span>
+                                            </div>
+                                            <div class="relative">
+                                                <input type="number" id="calc-jam-extra" placeholder="Jam" class="input input-sm w-full font-bold pr-8" oninput="quickConvert()">
+                                                <span class="absolute right-2 top-2 text-[8px] font-bold opacity-30">JAM</span>
+                                            </div>
+                                        </div>
+                                        <p id="calc-preview" class="text-[9px] mt-2 text-center font-bold text-slate-400">Nilai akan dikemaskini pada input utama</p>
+                                    </div>
+
+                                    <div class="form-control">
+                                        <label class="label py-1"><span class="label-text font-bold text-slate-500 text-xs uppercase">Kategori Subjek</span></label>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <label class="label cursor-pointer p-3 border rounded-xl hover:border-primary transition-all has-[:checked]:bg-primary/5 has-[:checked]:border-primary">
+                                                <span class="label-text font-bold text-xs">Mu'tadah (Mengalami haid secara adat)</span> 
+                                                <input type="radio" name="kategori" value="mu'tadah" checked class="radio radio-primary radio-xs" />
+                                            </label>
+                                            <label class="label cursor-pointer p-3 border rounded-xl hover:border-primary transition-all has-[:checked]:bg-primary/5 has-[:checked]:border-primary">
+                                                <span class="label-text font-bold text-xs">Mubtadiah (Pertama kali alami haid)</span> 
+                                                <input type="radio" name="kategori" value="mubtadia'ah" class="radio radio-primary radio-xs" />
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="calculateSyafii()" class="btn btn-primary w-full h-14 rounded-2xl shadow-xl shadow-primary/20 text-md font-black">
+                                        PROSES ANALISIS HUKUM
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Column Result -->
                     <div class="lg:col-span-7">
-                        <div id="actual-result" class="card bg-white shadow-xl rounded-[2rem] p-8 min-h-[400px]">
-                            <div id="empty-result" class="flex flex-col items-center justify-center h-full opacity-30 py-20">
-                                <i data-lucide="microscope" class="w-16 h-16 mb-4"></i>
-                                <p class="font-bold">Sila tekan butang analisis untuk hasil</p>
+                        <div id="actual-result" class="card bg-white shadow-xl rounded-[2rem] min-h-[500px] overflow-hidden">
+                            <div id="empty-result" class="flex flex-col items-center justify-center h-full opacity-20 py-32 text-center p-8">
+                                <i data-lucide="refresh-cw" class="w-16 h-16 mb-4 animate-spin-slow"></i>
+                                <h4 class="text-xl font-black">MENUNGGU INPUT</h4>
+                                <p class="text-sm mt-2">Enjin Forward Chaining bersedia untuk memproses data mengikut Qawaid Fiqhiyyah.</p>
                             </div>
-                            <!-- Result content injected here by JS -->
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW: Pustaka Kitab (Darah Wanita Sahaja) -->
-            <div id="view-fatwa" class="hidden max-w-6xl mx-auto space-y-10">
-                <div class="text-center">
-                    <h2 class="text-3xl font-black text-slate-800">Rujukan Khusus Darah Wanita</h2>
-                    <p class="text-slate-500 mt-2 font-medium italic">Senarai rujukan teknikal mengenai Haid, Nifas dan Istihadhah.</p>
+            <!-- VIEW: Pustaka Rujukan (Filtered) -->
+            <div id="view-fatwa" class="hidden max-w-4xl mx-auto space-y-8">
+                <div class="bg-primary text-primary-content p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-black tracking-tight">Rujukan Utama Enjin</h2>
+                        <p class="opacity-80 mt-2 font-medium">Kitab-kitab autoriti yang membentuk logik algoritma NisaaFiqh.</p>
+                    </div>
+                    <i data-lucide="book" class="absolute -right-4 -bottom-4 w-32 h-32 opacity-10 rotate-12"></i>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Kitab 1 -->
-                    <div class="card bg-white shadow-lg rounded-3xl border-l-4 border-primary">
-                        <div class="card-body p-6">
-                            <div class="badge badge-primary mb-2">Syafi'iyyah</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card bg-white p-6 shadow-lg rounded-3xl border border-slate-100">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-primary font-black">01</div>
+                            <h3 class="font-bold text-lg">Minhaj al-Talibin</h3>
+                        </div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Imam al-Nawawi</p>
+                        <p class="text-xs text-slate-600 leading-relaxed">Menjadi rujukan utama bagi penetapan tempoh minimum (24 jam) dan maksimum (15 hari) serta kaedah Tamyiz dalam enjin ini.</p>
+                    </div>
+
+                    <div class="card bg-white p-6 shadow-lg rounded-3xl border border-slate-100">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-primary font-black">02</div>
                             <h3 class="font-bold text-lg">Al-Ibanah wa al-Tafsir</h3>
-                            <p class="text-[10px] font-black text-slate-400 uppercase">Imam al-Darimi</p>
-                            <p class="text-xs text-slate-600 mt-3 leading-relaxed">Kitab rujukan paling terperinci dalam Mazhab Syafi'i yang memfokuskan sepenuhnya kepada perincian warna dan sifat darah wanita.</p>
                         </div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Imam al-Darimi</p>
+                        <p class="text-xs text-slate-600 leading-relaxed">Logik perbezaan sifat darah (Tamyiz) antara kuat dan lemah dalam algoritma ini merujuk kepada perincian kitab ini.</p>
                     </div>
 
-                    <!-- Kitab 2 -->
-                    <div class="card bg-white shadow-lg rounded-3xl border-l-4 border-rose-400">
-                        <div class="card-body p-6">
-                            <div class="badge badge-outline mb-2">Syafi'iyyah</div>
-                            <h3 class="font-bold text-lg">Risalah al-Dima'</h3>
-                            <p class="text-[10px] font-black text-slate-400 uppercase">Syeikh Muhammad B. Salim</p>
-                            <p class="text-xs text-slate-600 mt-3 leading-relaxed">Satu risalah ringkas tetapi padat mengenai kaedah kiraan adat dan tamyiz dalam menentukan jenis darah wanita.</p>
+                    <div class="card bg-white p-6 shadow-lg rounded-3xl border border-slate-100">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-primary font-black">03</div>
+                            <h3 class="font-bold text-lg">Al-Umm</h3>
                         </div>
-                    </div>
-
-                    <!-- Kitab 3 -->
-                    <div class="card bg-white shadow-lg rounded-3xl border-l-4 border-amber-400">
-                        <div class="card-body p-6">
-                            <div class="badge badge-warning mb-2">Hanafi</div>
-                            <h3 class="font-bold text-lg">Tuhfah al-Akyas</h3>
-                            <p class="text-[10px] font-black text-slate-400 uppercase">Imam al-Birgivi</p>
-                            <p class="text-xs text-slate-600 mt-3 leading-relaxed">Kitab khusus (Risalah fi al-Haid) dalam mazhab Hanafi yang menghuraikan hukum haid secara sistematik.</p>
-                        </div>
-                    </div>
-
-                    <!-- Kitab 4 -->
-                    <div class="card bg-white shadow-lg rounded-3xl border-l-4 border-emerald-400">
-                        <div class="card-body p-6">
-                            <div class="badge badge-success mb-2">Kontemporari</div>
-                            <h3 class="font-bold text-lg">Fiqh al-Haid wa al-Nifas</h3>
-                            <p class="text-[10px] font-black text-slate-400 uppercase">Dr. Sa'ad al-Shatri</p>
-                            <p class="text-xs text-slate-600 mt-3 leading-relaxed">Himpunan fatwa moden yang membandingkan pandangan mazhab mengenai isu perubatan berkaitan darah wanita.</p>
-                        </div>
-                    </div>
-
-                    <!-- Kitab 5 -->
-                    <div class="card bg-white shadow-lg rounded-3xl border-l-4 border-blue-400">
-                        <div class="card-body p-6">
-                            <div class="badge badge-info mb-2">Lokal</div>
-                            <h3 class="font-bold text-lg">Haid & Istihadhah</h3>
-                            <p class="text-[10px] font-black text-slate-400 uppercase">Ustaz Zulkifli al-Bakri</p>
-                            <p class="text-xs text-slate-600 mt-3 leading-relaxed">Buku rujukan bahasa Melayu yang menyusun semula pandangan Imam Nawawi khusus untuk wanita Nusantara.</p>
-                        </div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Imam al-Syafi'i</p>
+                        <p class="text-xs text-slate-600 leading-relaxed">Asas utama enjin dalam menentukan konsep Istihadhah dan perbezaannya dengan Haid yang Sah.</p>
                     </div>
                 </div>
             </div>
 
             <!-- VIEW: Sejarah -->
-            <div id="view-audit" class="hidden max-w-5xl mx-auto">
-                <div class="card bg-white shadow-xl rounded-[2rem] overflow-hidden">
-                    <div class="p-6 border-b flex justify-between">
-                        <h3 class="font-bold">Log Rekod Syarie</h3>
-                        <span class="text-xs opacity-50">Autosave diaktifkan</span>
+            <div id="view-audit" class="hidden max-w-4xl mx-auto">
+                <div class="card bg-white shadow-xl rounded-[2rem] overflow-hidden border border-slate-100">
+                    <div class="p-6 border-b flex justify-between bg-slate-50/50 items-center">
+                        <h3 class="font-extrabold text-slate-800">Log Analisis Sistem</h3>
+                        <span class="badge badge-sm font-bold">LIVE FEED</span>
                     </div>
                     <div id="audit-table-body" class="p-4 space-y-3">
-                        <!-- Audit entries here -->
+                        <div class="text-center py-24 opacity-30">
+                            <i data-lucide="database" class="w-12 h-12 mx-auto mb-2"></i>
+                            <p class="text-xs font-bold uppercase tracking-widest">Pangkalan data kosong</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -234,110 +253,190 @@
         </main>
 
         <!-- Mobile Bottom Nav -->
-        <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around items-center h-20 px-6 z-[101]">
-            <button onclick="switchTab('kalkulator')" class="flex flex-col items-center text-primary" id="m-btn-kalkulator">
-                <i data-lucide="calculator" class="w-6 h-6"></i>
-                <span class="text-[10px] font-bold">KIRA</span>
+        <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-100 flex justify-around items-center h-20 px-6 z-[200]">
+            <button onclick="switchTab('kalkulator')" class="flex flex-col items-center transition-all text-primary" id="m-btn-kalkulator">
+                <div class="p-2 rounded-xl transition-all" id="m-icon-kalkulator"><i data-lucide="cpu" class="w-6 h-6"></i></div>
+                <span class="text-[9px] font-black mt-1">KIRAAN</span>
             </button>
-            <button onclick="switchTab('fatwa')" class="flex flex-col items-center text-slate-400" id="m-btn-fatwa">
-                <i data-lucide="book-open" class="w-6 h-6"></i>
-                <span class="text-[10px] font-bold">KITAB</span>
+            <button onclick="switchTab('fatwa')" class="flex flex-col items-center transition-all text-slate-400" id="m-btn-fatwa">
+                <div class="p-2 rounded-xl transition-all" id="m-icon-fatwa"><i data-lucide="library" class="w-6 h-6"></i></div>
+                <span class="text-[9px] font-black mt-1">RUJUKAN</span>
             </button>
-            <button onclick="switchTab('audit')" class="flex flex-col items-center text-slate-400" id="m-btn-audit">
-                <i data-lucide="history" class="w-6 h-6"></i>
-                <span class="text-[10px] font-bold">REKOD</span>
+            <button onclick="switchTab('audit')" class="flex flex-col items-center transition-all text-slate-400" id="m-btn-audit">
+                <div class="p-2 rounded-xl transition-all" id="m-icon-audit"><i data-lucide="history" class="w-6 h-6"></i></div>
+                <span class="text-[9px] font-black mt-1">SEJARAH</span>
             </button>
         </nav>
     </div>
 
     <script>
-        lucide.createIcons();
+        window.onload = function() {
+            lucide.createIcons();
+        };
+
+        function quickConvert() {
+            const hari = parseFloat(document.getElementById('calc-hari').value) || 0;
+            const jamExtra = parseFloat(document.getElementById('calc-jam-extra').value) || 0;
+            const total = (hari * 24) + jamExtra;
+            
+            if (total > 0) {
+                document.getElementById('input-darah').value = total;
+                document.getElementById('calc-preview').innerHTML = `<span class="text-primary font-black">Dikesan:</span> ${hari}h ${jamExtra}j = <span class="text-slate-800">${total} Jam</span>`;
+            } else {
+                document.getElementById('calc-preview').innerText = "Nilai akan dikemaskini pada input utama";
+            }
+        }
 
         function switchTab(id) {
             ['kalkulator', 'fatwa', 'audit'].forEach(v => {
-                document.getElementById(`view-${v}`).classList.toggle('hidden', v !== id);
+                const view = document.getElementById(`view-${v}`);
+                if (view) view.classList.toggle('hidden', v !== id);
                 
-                // Desktop nav classes
                 const btn = document.getElementById(`btn-${v}`);
-                if (btn) btn.classList.toggle('bg-primary/10', v === id), btn.classList.toggle('text-primary', v === id);
-
-                // Mobile nav classes
+                if (btn) {
+                    btn.classList.toggle('bg-primary/10', v === id);
+                    btn.classList.toggle('text-primary', v === id);
+                }
+                
                 const mBtn = document.getElementById(`m-btn-${v}`);
-                if (mBtn) mBtn.classList.toggle('text-primary', v === id), mBtn.classList.toggle('text-slate-400', v !== id);
+                if (mBtn) {
+                    mBtn.classList.toggle('text-primary', v === id);
+                    mBtn.classList.toggle('text-slate-400', v !== id);
+                }
             });
-            
-            // Ensure icons refresh
             lucide.createIcons();
-            
-            // Scroll to top when switching
             document.querySelector('.scrollable-content').scrollTop = 0;
         }
 
-        function calculateFiqh() {
-            const mazhab = document.getElementById('mazhab-select').value;
+        // ENJIN UTAMA: FORWARD CHAINING RULES
+        function calculateSyafii() {
             const darah = parseInt(document.getElementById('input-darah').value);
             const suci = parseInt(document.getElementById('input-suci').value);
-            
+            const sifat = document.getElementById('sifat-darah').value;
+            const kategori = document.querySelector('input[name="kategori"]:checked').value;
             const resultDiv = document.getElementById('actual-result');
             
-            let status = "HAID SAH";
-            let color = "text-emerald-600";
-            let desc = "Darah memenuhi syarat minimum haid (24 jam) dan tempoh suci minimum (15 hari).";
+            // State Variables
+            let status = "", colorClass = "", gradientClass = "", icon = "", rujukan = "";
+            let analisis = "", hukumIbadah = "", tag = "";
 
+            // Rule 1: Minimum Haid (24 jam)
             if (darah < 24) {
-                status = "ISTIHADHAH";
-                color = "text-rose-600";
-                desc = "Darah belum mencapai 24 jam (tempoh minimum haid).";
-            } else if (darah > 360) {
-                status = "ISTIHADHAH (CAMPURAN)";
-                color = "text-amber-600";
-                desc = "Darah melebihi 15 hari. Bahagian yang melebihi adat/had maksima dikira Istihadhah.";
-            } else if (suci < 15) {
-                status = "ISTIHADHAH";
-                color = "text-rose-600";
-                desc = "Tempoh suci antara dua haid kurang daripada 15 hari (Syafi'i).";
+                status = "ISTIHADHAH (Fasad)";
+                colorClass = "text-rose-600";
+                gradientClass = "result-gradient-istihadhah";
+                icon = "alert-circle";
+                rujukan = "Minhaj al-Talibin & Al-Umm";
+                analisis = "Darah tidak mencapai tempoh minimum 24 jam mengikut istiqra' (pemerhatian) Imam al-Syafi'i.";
+                hukumIbadah = "Wajib solat, puasa dan boleh jimak. Anggap ia sebagai darah penyakit.";
+                tag = "BAWAH MINIMUM";
+            } 
+            // Rule 2: Maksimum Haid (15 hari / 360 jam)
+            else if (darah > 360) {
+                status = "ISTIHADHAH (Mutahayyirah)";
+                colorClass = "text-amber-600";
+                gradientClass = "result-gradient-warning";
+                icon = "help-circle";
+                rujukan = "Minhaj al-Talibin (Bab al-Haid)";
+                analisis = "Darah melebihi had maksimum 15 hari. Perlu dibezakan antara darah kuat (haid) dan lemah (istihadhah).";
+                hukumIbadah = "Berhenti solat pada tempoh adat/tamyiz sahaja. Selebihnya wajib mandi dan solat.";
+                tag = "LEBIH MAKSIMUM";
+            }
+            // Rule 3: Minimum Suci (15 hari / 360 jam)
+            else if (suci < 15) {
+                status = "ISTIHADHAH (Tadakhul)";
+                colorClass = "text-orange-600";
+                gradientClass = "result-gradient-istihadhah";
+                icon = "refresh-ccw";
+                rujukan = "Al-Ibanah wa al-Tafsir";
+                analisis = "Tempoh suci antara dua haid mestilah sekurang-kurangnya 15 hari. Darah ini dianggap sambungan atau istihadhah.";
+                hukumIbadah = "Wajib solat jika masih dalam tempoh baki suci 15 hari.";
+                tag = "SUCI TAK CUKUP";
+            }
+            // Rule 4: Haid Sah (Normal)
+            else {
+                status = "HAID SAH (Mu'tamad)";
+                colorClass = "text-emerald-600";
+                gradientClass = "result-gradient-haid";
+                icon = "check-circle";
+                rujukan = "Al-Umm & Minhaj al-Talibin";
+                analisis = "Darah memenuhi semua kriteria: > 24 jam, < 15 hari, dan suci sebelumnya > 15 hari.";
+                hukumIbadah = "Haram solat, puasa, tawaf dan jimak sehingga darah berhenti dan mandi wajib.";
+                tag = "SAH SYARAK";
             }
 
+            // Render Output
             resultDiv.innerHTML = `
-                <div class="space-y-6">
-                    <div class="flex items-center gap-4">
-                        <div class="p-4 bg-slate-100 rounded-2xl">
-                            <i data-lucide="info" class="w-8 h-8 text-primary"></i>
+                <div class="${gradientClass} h-full p-8 md:p-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-10">
+                            <div>
+                                <span class="badge badge-lg font-black tracking-widest text-[10px] bg-slate-800 text-white border-none px-4 py-3 mb-4 uppercase">${tag}</span>
+                                <h2 class="text-4xl md:text-5xl font-black ${colorClass} leading-none mb-2">${status}</h2>
+                                <p class="text-slate-400 font-bold flex items-center gap-2">
+                                    <i data-lucide="book-open" class="w-4 h-4"></i> Rujukan: ${rujukan}
+                                </p>
+                            </div>
+                            <div class="p-5 rounded-3xl bg-white shadow-xl shadow-slate-200">
+                                <i data-lucide="${icon}" class="w-12 h-12 ${colorClass}"></i>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Keputusan Analisis</p>
-                            <h2 class="text-3xl font-black ${color}">${status}</h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                            <div class="bg-white/60 backdrop-blur p-6 rounded-[2rem] border border-white">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Analisis Logik Enjin</p>
+                                <p class="text-slate-700 font-medium leading-relaxed">${analisis}</p>
+                            </div>
+                            <div class="bg-white/80 p-6 rounded-[2rem] border border-white shadow-sm">
+                                <p class="text-[10px] font-black text-primary uppercase tracking-widest mb-3">Status Ibadah</p>
+                                <p class="text-slate-900 font-extrabold text-lg leading-tight">${hukumIbadah}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 italic font-medium text-slate-600">
-                        "${desc}"
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 text-xs">
-                        <div class="p-4 bg-white border border-slate-100 rounded-xl">
-                            <span class="block opacity-50 mb-1">Durasi Darah:</span>
-                            <span class="font-bold">${darah} Jam</span>
-                        </div>
-                        <div class="p-4 bg-white border border-slate-100 rounded-xl">
-                            <span class="block opacity-50 mb-1">Tempoh Suci:</span>
-                            <span class="font-bold">${suci} Hari</span>
+
+                        <div class="mt-auto pt-8 border-t border-slate-100 flex flex-wrap gap-4">
+                            <div class="flex items-center gap-3 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100">
+                                <i data-lucide="clock" class="w-4 h-4 text-slate-400"></i>
+                                <span class="text-sm font-black text-slate-600">${darah} Jam</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100">
+                                <i data-lucide="droplet" class="w-4 h-4 text-slate-400"></i>
+                                <span class="text-sm font-black text-slate-600 capitalize">${sifat}</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100">
+                                <i data-lucide="user" class="w-4 h-4 text-slate-400"></i>
+                                <span class="text-sm font-black text-slate-600 capitalize">${kategori}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
             lucide.createIcons();
             
-            // Log to history
+            // Add to audit trail
             const audit = document.getElementById('audit-table-body');
+            if (audit.innerText.includes("Pangkalan data kosong")) audit.innerHTML = "";
             const entry = document.createElement('div');
-            entry.className = "p-4 bg-slate-50 border border-slate-100 rounded-xl flex justify-between items-center";
+            entry.className = "group p-5 bg-white border border-slate-100 rounded-3xl flex justify-between items-center shadow-sm hover:shadow-md transition-all";
             entry.innerHTML = `
-                <div>
-                    <p class="text-[10px] font-bold opacity-40">${new Date().toLocaleTimeString()}</p>
-                    <p class="font-bold text-sm">${status} (${darah}j)</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center ${colorClass.replace('text', 'bg').replace('600', '100')} ${colorClass}">
+                         <i data-lucide="${icon}" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="font-black text-slate-800">${status}</p>
+                        <p class="text-[10px] opacity-40 uppercase font-bold tracking-tighter">${new Date().toLocaleString('ms-MY')}</p>
+                    </div>
                 </div>
-                <span class="text-[10px] font-black uppercase tracking-tighter text-primary">Mazhab ${mazhab}</span>
+                <div class="text-right">
+                    <span class="block text-xs font-black text-slate-400 uppercase">${darah} JAM</span>
+                    <span class="text-[10px] font-bold text-primary">${tag}</span>
+                </div>
             `;
             audit.prepend(entry);
+            
+            if (window.innerWidth < 1024) {
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
     </script>
 </body>
